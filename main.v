@@ -24,8 +24,8 @@ end
 
 // Aqui eu analiso o pulso de 0 oara 1, quanodo há um pulso flag recebe 1;
 always @(posedge clk) begin
-	 oldKey = key;
-    flag = (~oldKey && key);
+	 oldKey <= key;
+    flag <= (~oldKey && key);
 end
 
 
@@ -46,7 +46,7 @@ always @(posedge clk) begin
 
 	 
     if(key == 0) begin
-        contador = contador + 1;
+        contador <= contador + 1;
     end
 
     if(flag == 1) begin
@@ -64,7 +64,7 @@ always @(posedge clk) begin
                 if(contador < temp) begin
 							state <= estado3;
                 end else begin 
-                    validMov <= red;
+                    state <= red;
                 end
             end
             estado3: begin 
@@ -85,10 +85,9 @@ always @(posedge clk) begin
             red: begin state = estado1; end
             
         endcase
+		  contador <= 0;
     end
-    if(key == 1) begin 
-        contador = 0;
-    end
+  
 end
 
 endmodule
